@@ -23,7 +23,6 @@ export class PerVertexMaterial extends gfx.Material3
 
     public static shader = new gfx.ShaderProgram(gouraudVertexShader, gouraudFragmentShader);
 
-    /*
     private kAmbientUniform: WebGLUniformLocation | null;
     private kDiffuseUniform: WebGLUniformLocation | null;
     private kSpecularUniform: WebGLUniformLocation | null;
@@ -49,7 +48,6 @@ export class PerVertexMaterial extends gfx.Material3
     private normalAttribute: number;
     private colorAttribute: number;
     private texCoordAttribute: number;
-    */
 
     constructor()
     {
@@ -63,7 +61,6 @@ export class PerVertexMaterial extends gfx.Material3
 
         PerVertexMaterial.shader.initialize(this.gl);
 
-        /*
         this.kAmbientUniform = PerVertexMaterial.shader.getUniform(this.gl, 'kAmbient');
         this.kDiffuseUniform = PerVertexMaterial.shader.getUniform(this.gl, 'kDiffuse');
         this.kSpecularUniform = PerVertexMaterial.shader.getUniform(this.gl, 'kSpecular');
@@ -89,7 +86,6 @@ export class PerVertexMaterial extends gfx.Material3
         this.normalAttribute = PerVertexMaterial.shader.getAttribute(this.gl, 'normal');
         this.colorAttribute = PerVertexMaterial.shader.getAttribute(this.gl, 'color');
         this.texCoordAttribute = PerVertexMaterial.shader.getAttribute(this.gl, 'texCoord');   
-        */
     }
 
     draw(mesh: gfx.Mesh, transform: gfx.Transform3, camera: gfx.Camera, lightManager: gfx.LightManager): void
@@ -101,8 +97,6 @@ export class PerVertexMaterial extends gfx.Material3
 
         // Switch to this shader
         this.gl.useProgram(PerVertexMaterial.shader.getProgram());
-
-        /*
 
         // Set the camera uniforms
         const cameraPosition = new gfx.Vector3();
@@ -163,7 +157,6 @@ export class PerVertexMaterial extends gfx.Material3
             this.gl.uniform1i(this.useTextureUniform, 0);
             this.gl.disableVertexAttribArray(this.texCoordAttribute);
         }
-        */
 
         // Draw the triangles
         this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER, mesh.indexBuffer);
