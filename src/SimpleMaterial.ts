@@ -27,15 +27,13 @@ export class SimpleMaterial extends gfx.Material3
 
     private positionAttribute: number;
 
-    /*
     private textureUniform: WebGLUniformLocation | null;
     private useTextureUniform: WebGLUniformLocation | null;
 
-    
-
-    
-    private colorAttribute: number;
     private texCoordAttribute: number;
+
+    /*
+    private colorAttribute: number;
     */
 
     constructor()
@@ -51,17 +49,15 @@ export class SimpleMaterial extends gfx.Material3
         this.projectionUniform = SimpleMaterial.shader.getUniform(this.gl, 'projectionMatrix');
 
         this.colorUniform = SimpleMaterial.shader.getUniform(this.gl, 'materialColor');
-
-        this.positionAttribute = SimpleMaterial.shader.getAttribute(this.gl, 'position');
-
-        /*
-        
         this.textureUniform = SimpleMaterial.shader.getUniform(this.gl, 'textureImage');
         this.useTextureUniform = SimpleMaterial.shader.getUniform(this.gl, 'useTexture');
 
+        this.positionAttribute = SimpleMaterial.shader.getAttribute(this.gl, 'position');
+        this.texCoordAttribute = SimpleMaterial.shader.getAttribute(this.gl, 'texCoord'); 
         
+        /*
         this.colorAttribute = SimpleMaterial.shader.getAttribute(this.gl, 'color');
-        this.texCoordAttribute = SimpleMaterial.shader.getAttribute(this.gl, 'texCoord');   
+          
         */
     }
 
@@ -87,18 +83,6 @@ export class SimpleMaterial extends gfx.Material3
         this.gl.bindBuffer(this.gl.ARRAY_BUFFER, mesh.positionBuffer);
         this.gl.vertexAttribPointer(this.positionAttribute, 3, this.gl.FLOAT, false, 0, 0);
 
-
-        /*
-
-        
-
-        
-        // Set the vertex colors
-        this.gl.enableVertexAttribArray(this.colorAttribute);
-        this.gl.bindBuffer(this.gl.ARRAY_BUFFER, mesh.colorBuffer);
-        this.gl.vertexAttribPointer(this.colorAttribute, 4, this.gl.FLOAT, false, 0, 0);
-
-        
         if(this.texture)
         {
             // Activate the texture in the shader
@@ -120,6 +104,21 @@ export class SimpleMaterial extends gfx.Material3
             this.gl.uniform1i(this.useTextureUniform, 0);
             this.gl.disableVertexAttribArray(this.texCoordAttribute);
         }
+
+
+
+        /*
+
+        
+
+        
+        // Set the vertex colors
+        this.gl.enableVertexAttribArray(this.colorAttribute);
+        this.gl.bindBuffer(this.gl.ARRAY_BUFFER, mesh.colorBuffer);
+        this.gl.vertexAttribPointer(this.colorAttribute, 4, this.gl.FLOAT, false, 0, 0);
+
+        
+       
 
         */
 

@@ -18,9 +18,16 @@ uniform mat4 projectionMatrix;
 
 // The inputs are the data for this vertex in a GPU memory buffer.
 in vec3 position;
+in vec2 texCoord;
+
+// The outputs are the data that will be interpolated by the rasterizer and then
+// passed as inputs to the fragment shader.
+out vec2 uv;
 
 void main()
 {
+    uv = texCoord;
+    
     // A vertex shader must assign a value to gl_Position.
     gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1);
 }
