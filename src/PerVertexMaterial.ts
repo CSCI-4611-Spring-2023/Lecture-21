@@ -24,25 +24,25 @@ export class PerVertexMaterial extends gfx.Material3
     public static shader = new gfx.ShaderProgram(gouraudVertexShader, gouraudFragmentShader);
 
     private kAmbientUniform: WebGLUniformLocation | null;
-    // private kDiffuseUniform: WebGLUniformLocation | null;
-    // private kSpecularUniform: WebGLUniformLocation | null;
-    // private shininessUniform: WebGLUniformLocation | null;
+    private kDiffuseUniform: WebGLUniformLocation | null;
+    private kSpecularUniform: WebGLUniformLocation | null;
+    private shininessUniform: WebGLUniformLocation | null;
     
     private textureUniform: WebGLUniformLocation | null;
     private useTextureUniform: WebGLUniformLocation | null;
 
-    // private eyePositionUniform: WebGLUniformLocation | null;
+    private eyePositionUniform: WebGLUniformLocation | null;
     private modelUniform: WebGLUniformLocation | null;
     private viewUniform: WebGLUniformLocation | null;
     private projectionUniform: WebGLUniformLocation | null;
     private normalUniform: WebGLUniformLocation | null;
 
     private numLightsUniform: WebGLUniformLocation | null;
-    // private lightTypesUniform: WebGLUniformLocation | null;
-    // private lightPositionsUniform: WebGLUniformLocation | null;
+    private lightTypesUniform: WebGLUniformLocation | null;
+    private lightPositionsUniform: WebGLUniformLocation | null;
     private ambientIntensitiesUniform: WebGLUniformLocation | null;
-    // private diffuseIntensitiesUniform: WebGLUniformLocation | null;
-    // private specularIntensitiesUniform: WebGLUniformLocation | null;
+    private diffuseIntensitiesUniform: WebGLUniformLocation | null;
+    private specularIntensitiesUniform: WebGLUniformLocation | null;
 
     private positionAttribute: number;
     private normalAttribute: number;
@@ -62,25 +62,25 @@ export class PerVertexMaterial extends gfx.Material3
         PerVertexMaterial.shader.initialize(this.gl);
 
         this.kAmbientUniform = PerVertexMaterial.shader.getUniform(this.gl, 'kAmbient');
-        // this.kDiffuseUniform = PerVertexMaterial.shader.getUniform(this.gl, 'kDiffuse');
-        // this.kSpecularUniform = PerVertexMaterial.shader.getUniform(this.gl, 'kSpecular');
-        // this.shininessUniform = PerVertexMaterial.shader.getUniform(this.gl, 'shininess');
+        this.kDiffuseUniform = PerVertexMaterial.shader.getUniform(this.gl, 'kDiffuse');
+        this.kSpecularUniform = PerVertexMaterial.shader.getUniform(this.gl, 'kSpecular');
+        this.shininessUniform = PerVertexMaterial.shader.getUniform(this.gl, 'shininess');
 
         this.textureUniform = PerVertexMaterial.shader.getUniform(this.gl, 'textureImage');
         this.useTextureUniform = PerVertexMaterial.shader.getUniform(this.gl, 'useTexture');
 
-        //this.eyePositionUniform = PerVertexMaterial.shader.getUniform(this.gl, 'eyePosition');
+        this.eyePositionUniform = PerVertexMaterial.shader.getUniform(this.gl, 'eyePosition');
         this.viewUniform = PerVertexMaterial.shader.getUniform(this.gl, 'viewMatrix');
         this.modelUniform = PerVertexMaterial.shader.getUniform(this.gl, 'modelMatrix');
         this.projectionUniform = PerVertexMaterial.shader.getUniform(this.gl, 'projectionMatrix');
         this.normalUniform = PerVertexMaterial.shader.getUniform(this.gl, 'normalMatrix');
 
         this.numLightsUniform = PerVertexMaterial.shader.getUniform(this.gl, 'numLights');
-        // this.lightTypesUniform = PerVertexMaterial.shader.getUniform(this.gl, 'lightTypes');
-        // this.lightPositionsUniform = PerVertexMaterial.shader.getUniform(this.gl, 'lightPositions');
+        this.lightTypesUniform = PerVertexMaterial.shader.getUniform(this.gl, 'lightTypes');
+        this.lightPositionsUniform = PerVertexMaterial.shader.getUniform(this.gl, 'lightPositions');
         this.ambientIntensitiesUniform = PerVertexMaterial.shader.getUniform(this.gl, 'ambientIntensities');
-        // this.diffuseIntensitiesUniform = PerVertexMaterial.shader.getUniform(this.gl, 'diffuseIntensities');
-        // this.specularIntensitiesUniform = PerVertexMaterial.shader.getUniform(this.gl, 'specularIntensities');
+        this.diffuseIntensitiesUniform = PerVertexMaterial.shader.getUniform(this.gl, 'diffuseIntensities');
+        this.specularIntensitiesUniform = PerVertexMaterial.shader.getUniform(this.gl, 'specularIntensities');
 
         this.positionAttribute = PerVertexMaterial.shader.getAttribute(this.gl, 'position');
         this.normalAttribute = PerVertexMaterial.shader.getAttribute(this.gl, 'normal');
@@ -101,7 +101,7 @@ export class PerVertexMaterial extends gfx.Material3
         // Set the camera uniforms
         const cameraPosition = new gfx.Vector3();
         cameraPosition.transform(camera.worldMatrix);
-        //this.gl.uniform3f(this.eyePositionUniform, cameraPosition.x, cameraPosition.y, cameraPosition.z);
+        this.gl.uniform3f(this.eyePositionUniform, cameraPosition.x, cameraPosition.y, cameraPosition.z);
         this.gl.uniformMatrix4fv(this.modelUniform, false, transform.worldMatrix.mat);
         this.gl.uniformMatrix4fv(this.viewUniform, false, camera.viewMatrix.mat);
         this.gl.uniformMatrix4fv(this.projectionUniform, false, camera.projectionMatrix.mat);
@@ -109,17 +109,17 @@ export class PerVertexMaterial extends gfx.Material3
 
         // Set the material property uniforms
         this.gl.uniform3f(this.kAmbientUniform, this.ambientColor.r, this.ambientColor.g, this.ambientColor.b);
-        // this.gl.uniform3f(this.kDiffuseUniform, this.diffuseColor.r, this.diffuseColor.g, this.diffuseColor.b);
-        // this.gl.uniform3f(this.kSpecularUniform,this.specularColor.r, this.specularColor.g, this.specularColor.b);
-        // this.gl.uniform1f(this.shininessUniform, this.shininess);
+        this.gl.uniform3f(this.kDiffuseUniform, this.diffuseColor.r, this.diffuseColor.g, this.diffuseColor.b);
+        this.gl.uniform3f(this.kSpecularUniform,this.specularColor.r, this.specularColor.g, this.specularColor.b);
+        this.gl.uniform1f(this.shininessUniform, this.shininess);
 
         // Set the light uniforms
         this.gl.uniform1i(this.numLightsUniform, lightManager.getNumLights());
-        // this.gl.uniform1iv(this.lightTypesUniform, lightManager.lightTypes);
-        // this.gl.uniform3fv(this.lightPositionsUniform, lightManager.lightPositions);
+        this.gl.uniform1iv(this.lightTypesUniform, lightManager.lightTypes);
+        this.gl.uniform3fv(this.lightPositionsUniform, lightManager.lightPositions);
         this.gl.uniform3fv(this.ambientIntensitiesUniform, lightManager.ambientIntensities);
-        // this.gl.uniform3fv(this.diffuseIntensitiesUniform, lightManager.diffuseIntensities);
-        // this.gl.uniform3fv(this.specularIntensitiesUniform, lightManager.specularIntensities);
+        this.gl.uniform3fv(this.diffuseIntensitiesUniform, lightManager.diffuseIntensities);
+        this.gl.uniform3fv(this.specularIntensitiesUniform, lightManager.specularIntensities);
 
         // Set the vertex positions
         this.gl.enableVertexAttribArray(this.positionAttribute);

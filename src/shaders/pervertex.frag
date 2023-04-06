@@ -10,9 +10,6 @@ precision mediump float;
 
 // The shader will be identical to the unlit shader in GopherGfx.
 
-// The uniforms are variables passed in to the shader each frame by the CPU program.
-uniform vec4 materialColor;
-
 // If the material does not include a texture, then useTexture will be set to 0.
 // Otherwise, it will be set to 1, and the image will be passed to the shader.
 uniform int useTexture;
@@ -29,7 +26,7 @@ out vec4 fragColor;
 
 void main()
 {
-    fragColor = materialColor * vertColor;
+    fragColor = vertColor;
 
     // If the material includes a texture image
     if(useTexture != 0)
