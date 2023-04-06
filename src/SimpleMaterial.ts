@@ -31,10 +31,7 @@ export class SimpleMaterial extends gfx.Material3
     private useTextureUniform: WebGLUniformLocation | null;
 
     private texCoordAttribute: number;
-
-    /*
     private colorAttribute: number;
-    */
 
     constructor()
     {
@@ -54,11 +51,7 @@ export class SimpleMaterial extends gfx.Material3
 
         this.positionAttribute = SimpleMaterial.shader.getAttribute(this.gl, 'position');
         this.texCoordAttribute = SimpleMaterial.shader.getAttribute(this.gl, 'texCoord'); 
-        
-        /*
         this.colorAttribute = SimpleMaterial.shader.getAttribute(this.gl, 'color');
-          
-        */
     }
 
     draw(mesh: gfx.Mesh, transform: gfx.Transform3, camera: gfx.Camera, lightManager: gfx.LightManager): void
@@ -83,6 +76,11 @@ export class SimpleMaterial extends gfx.Material3
         this.gl.bindBuffer(this.gl.ARRAY_BUFFER, mesh.positionBuffer);
         this.gl.vertexAttribPointer(this.positionAttribute, 3, this.gl.FLOAT, false, 0, 0);
 
+        // Set the vertex colors
+        this.gl.enableVertexAttribArray(this.colorAttribute);
+        this.gl.bindBuffer(this.gl.ARRAY_BUFFER, mesh.colorBuffer);
+        this.gl.vertexAttribPointer(this.colorAttribute, 4, this.gl.FLOAT, false, 0, 0);
+
         if(this.texture)
         {
             // Activate the texture in the shader
@@ -104,23 +102,6 @@ export class SimpleMaterial extends gfx.Material3
             this.gl.uniform1i(this.useTextureUniform, 0);
             this.gl.disableVertexAttribArray(this.texCoordAttribute);
         }
-
-
-
-        /*
-
-        
-
-        
-        // Set the vertex colors
-        this.gl.enableVertexAttribArray(this.colorAttribute);
-        this.gl.bindBuffer(this.gl.ARRAY_BUFFER, mesh.colorBuffer);
-        this.gl.vertexAttribPointer(this.colorAttribute, 4, this.gl.FLOAT, false, 0, 0);
-
-        
-       
-
-        */
 
         // Draw the triangles
         this.gl.bindBuffer(this.gl.ELEMENT_ARRAY_BUFFER, mesh.indexBuffer);

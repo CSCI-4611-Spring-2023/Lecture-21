@@ -18,16 +18,21 @@ uniform mat4 projectionMatrix;
 
 // The inputs are the data for this vertex in a GPU memory buffer.
 in vec3 position;
+in vec4 color;
 in vec2 texCoord;
 
 // The outputs are the data that will be interpolated by the rasterizer and then
 // passed as inputs to the fragment shader.
+out vec4 vertColor;
 out vec2 uv;
 
 void main()
 {
+    // Because the vertex color and texture coordinates are computed for each pixel,
+    // we don't do anything here.  We just pass them along to the fragment shader.
+    vertColor = color;
     uv = texCoord;
-    
+
     // A vertex shader must assign a value to gl_Position.
     gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1);
 }
