@@ -19,30 +19,30 @@ uniform mat4 normalMatrix;
 
 // These are the material reflection co-efficients (the Ks in the lighting equation)
 uniform vec3 kAmbient;
-uniform vec3 kDiffuse;
-uniform vec3 kSpecular;
+// uniform vec3 kDiffuse;
+// uniform vec3 kSpecular;
 
 // The specular component in the lighting equation requires a shininess coefficent (s)
 // and the eye position in world space, which will be used to compute the vector E.
-uniform float shininess;
-uniform vec3 eyePosition;
+// uniform float shininess;
+// uniform vec3 eyePosition;
 
 // Information about the lights in the scene are passed to the shader in an array.
 // The light intensities are the Is in the lighting equation.
 const int MAX_LIGHTS = 8;
 uniform int numLights;
 uniform vec3 ambientIntensities[MAX_LIGHTS];
-uniform vec3 diffuseIntensities[MAX_LIGHTS];
-uniform vec3 specularIntensities[MAX_LIGHTS];
+// uniform vec3 diffuseIntensities[MAX_LIGHTS];
+// uniform vec3 specularIntensities[MAX_LIGHTS];
 
 // The light positions are defined in world space.
-uniform vec3 lightPositions[MAX_LIGHTS];
+//uniform vec3 lightPositions[MAX_LIGHTS];
 
 // This shader supports point and directional lights.  The only difference between
 // them is the computation of the L vector in the lighting equation.
 #define POINT_LIGHT 0
 #define DIRECTIONAL_LIGHT 1
-uniform int lightTypes[MAX_LIGHTS];
+//uniform int lightTypes[MAX_LIGHTS];
 
 // The inputs are the data for this vertex in a GPU memory buffer.
 in vec3 position;
@@ -82,9 +82,18 @@ void main()
     // equation.  Otherwise, the illumination may have an incorrect scale factor.
     worldNormal = normalize(worldNormal);
 
-    
+    // This variable will be an accumulator for all the light components computed
+    // in the lighting equation for all of the lights in the scene.  We start
+    // by initializing it to a vec3 of zeros.
+    vec3 illumination = vec3(0, 0, 0);
 
-
+    // We need to loop through every light in the scene and compute the contribution
+    // of each one according to the lighting equation.
+    for(int i=0; i < numLights; i++)
+    {
+        // Compute the ambient component: Ka * Ia
+        illumination += kAmbient * ambientIntensities[i];
+    }
 
     // A vertex shader must assign a value to gl_Position.
     gl_Position = projectionMatrix * viewMatrix * vec4(worldPosition, 1);
