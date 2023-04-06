@@ -10,10 +10,13 @@ precision mediump float;
 
 // The shader will be identical to the unlit shader in GopherGfx.
 
+// The uniforms are variables passed in to the shader each frame by the CPU program.
+uniform vec4 materialColor;
+
 // A fragment shader can only have one output, which is the color of the pixel.
 out vec4 fragColor;
 
 void main()
 {
-    fragColor = vec4(0, 0, 0, 1);
+    fragColor = materialColor;
 }

@@ -20,15 +20,20 @@ export class SimpleMaterial extends gfx.Material3
 
     public static shader = new gfx.ShaderProgram(unlitVertexShader, unlitFragmentShader);
     
-    /*
-    private colorUniform: WebGLUniformLocation | null;
-    private textureUniform: WebGLUniformLocation | null;
-    private useTextureUniform: WebGLUniformLocation | null;
-
     private modelViewUniform: WebGLUniformLocation | null;
     private projectionUniform: WebGLUniformLocation | null;
 
+    private colorUniform: WebGLUniformLocation | null;
+
     private positionAttribute: number;
+
+    /*
+    private textureUniform: WebGLUniformLocation | null;
+    private useTextureUniform: WebGLUniformLocation | null;
+
+    
+
+    
     private colorAttribute: number;
     private texCoordAttribute: number;
     */
@@ -42,15 +47,19 @@ export class SimpleMaterial extends gfx.Material3
 
         SimpleMaterial.shader.initialize(this.gl);
 
-        /*
-        this.colorUniform = SimpleMaterial.shader.getUniform(this.gl, 'materialColor');
-        this.textureUniform = SimpleMaterial.shader.getUniform(this.gl, 'textureImage');
-        this.useTextureUniform = SimpleMaterial.shader.getUniform(this.gl, 'useTexture');
-
         this.modelViewUniform = SimpleMaterial.shader.getUniform(this.gl, 'modelViewMatrix');
         this.projectionUniform = SimpleMaterial.shader.getUniform(this.gl, 'projectionMatrix');
 
+        this.colorUniform = SimpleMaterial.shader.getUniform(this.gl, 'materialColor');
+
         this.positionAttribute = SimpleMaterial.shader.getAttribute(this.gl, 'position');
+
+        /*
+        
+        this.textureUniform = SimpleMaterial.shader.getUniform(this.gl, 'textureImage');
+        this.useTextureUniform = SimpleMaterial.shader.getUniform(this.gl, 'useTexture');
+
+        
         this.colorAttribute = SimpleMaterial.shader.getAttribute(this.gl, 'color');
         this.texCoordAttribute = SimpleMaterial.shader.getAttribute(this.gl, 'texCoord');   
         */
@@ -66,8 +75,6 @@ export class SimpleMaterial extends gfx.Material3
         // Switch to this shader
         this.gl.useProgram(SimpleMaterial.shader.getProgram());
 
-        /*
-
         // Set the camera uniforms
         this.gl.uniformMatrix4fv(this.modelViewUniform, false, gfx.Matrix4.multiply(transform.worldMatrix, camera.viewMatrix).mat);
         this.gl.uniformMatrix4fv(this.projectionUniform, false, camera.projectionMatrix.mat);
@@ -75,16 +82,23 @@ export class SimpleMaterial extends gfx.Material3
         // Set the material property uniforms
         this.gl.uniform4f(this.colorUniform, this.color.r, this.color.g, this.color.b, this.color.a);
 
-        // Set the vertex colors
-        this.gl.enableVertexAttribArray(this.colorAttribute);
-        this.gl.bindBuffer(this.gl.ARRAY_BUFFER, mesh.colorBuffer);
-        this.gl.vertexAttribPointer(this.colorAttribute, 4, this.gl.FLOAT, false, 0, 0);
-
         // Set the vertex positions
         this.gl.enableVertexAttribArray(this.positionAttribute);
         this.gl.bindBuffer(this.gl.ARRAY_BUFFER, mesh.positionBuffer);
         this.gl.vertexAttribPointer(this.positionAttribute, 3, this.gl.FLOAT, false, 0, 0);
 
+
+        /*
+
+        
+
+        
+        // Set the vertex colors
+        this.gl.enableVertexAttribArray(this.colorAttribute);
+        this.gl.bindBuffer(this.gl.ARRAY_BUFFER, mesh.colorBuffer);
+        this.gl.vertexAttribPointer(this.colorAttribute, 4, this.gl.FLOAT, false, 0, 0);
+
+        
         if(this.texture)
         {
             // Activate the texture in the shader
